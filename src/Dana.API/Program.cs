@@ -22,16 +22,7 @@ var app = builder.Build();
 
 // Map reverse proxy middleware to handle requests
 app.MapReverseProxy();
-// Use YARP with custom logging middleware
-app.MapReverseProxy(proxyPipeline =>
-{
-    proxyPipeline.Use(async (context, next) =>
-    {
-        Log.Information("Proxying request {Method} {Path}", context.Request.Method, context.Request.Path);
-        await next();
-        Log.Information("Proxied response status: {StatusCode}", context.Response.StatusCode);
-    });
-});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
